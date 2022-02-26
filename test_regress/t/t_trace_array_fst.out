@@ -1,5 +1,5 @@
 $date
-	Thu Jul  1 22:53:18 2021
+	Wed Feb 23 00:00:41 2022
 
 $end
 $version
@@ -12,9 +12,9 @@ $scope module top $end
 $var wire 1 ! clk $end
 $scope module t $end
 $var wire 1 ! clk $end
-$var integer 32 " cyc $end
+$var integer 32 " cyc [31:0] $end
 $scope struct biggie $end
-$var logic 1048577 # d $end
+$var logic 1048577 # d [1048576:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
