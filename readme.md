@@ -145,8 +145,6 @@ The following features are currently unsupported:
 
 ## Citation
 ```
-
-
 @article{parendi,
   author       = {Mahyar Emami and
                   Thomas Bourgeat and
@@ -158,12 +156,7 @@ The following features are currently unsupported:
   url          = {https://doi.org/10.48550/arXiv.2403.04714},
   doi          = {10.48550/ARXIV.2403.04714},
   eprinttype    = {arXiv},
-  eprint       = {2403.04714},
-  timestamp    = {Wed, 03 Apr 2024 15:23:01 +0200},
-  biburl       = {https://dblp.org/rec/journals/corr/abs-2403-04714.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+  eprint       = {2403.04714}
 }
-
-
 ```
 
