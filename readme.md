@@ -143,3 +143,27 @@ The following features are currently unsupported:
 - Limited support for packed structs
 - DPI export is unsupported (DPI import is buggy and slow)
 
+## Citation
+```
+
+
+@article{parendi,
+  author       = {Mahyar Emami and
+                  Thomas Bourgeat and
+                  James R. Larus},
+  title        = {{Parendi: Thousand-Way Parallel {RTL} Simulation}},
+  journal      = {CoRR},
+  volume       = {abs/2403.04714},
+  year         = {2024},
+  url          = {https://doi.org/10.48550/arXiv.2403.04714},
+  doi          = {10.48550/ARXIV.2403.04714},
+  eprinttype    = {arXiv},
+  eprint       = {2403.04714},
+  timestamp    = {Wed, 03 Apr 2024 15:23:01 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-2403-04714.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+```
+
