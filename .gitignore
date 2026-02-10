@@ -43,3 +43,4 @@ verilator-config-version.cmake
 /.vscode/
 build
 temp
+gittoken.txt
