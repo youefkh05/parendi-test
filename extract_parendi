@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ $# -ne 1 ]; then
+  echo "Usage: extract_parendi <design.v>"
+  exit 1
+fi
+
+DESIGN=$1
+TOP=$(basename "$DESIGN" .v)
+CSV_OUT="${TOP}_fibers.csv"
+
+if [ ! -f "$DESIGN" ]; then
+  echo "Error: $DESIGN not found"
+  exit 1
+fi
+
+echo "✔ Cleaning obj_dir"
+rm -rf obj_dir
+mkdir obj_dir
+
+echo "✔ Running Parendi on $DESIGN"
+./bin/verilator \
+  --cc "$DESIGN" \
+  --top-module "$TOP" \
+  --threads 1 > /dev/null
+
+echo "✔ Extracting DepSet statistics"
+
+python3 - << EOF
+import csv
+from extract_depset_stats import extract_stats
+
+stats, fibers = extract_stats()
+
+with open("$CSV_OUT", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["Metric", "Value"])
+    for k, v in stats.items():
+        writer.writerow([k, v])
+
+    writer.writerow([])
+    writer.writerow(["Fiber Name", "Lines of Code"])
+    for row in fibers:
+        writer.writerow([row["fiber_name"], row["lines_of_code"]])
+
+print("✔ Wrote results to $CSV_OUT")
+EOF

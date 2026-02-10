@@ -1,0 +1,11 @@
+Metric,Value
+num_fibers,2
+mean_fiber_size,67.5
+max_fiber_size,108
+min_fiber_size,27
+std_fiber_size,57.27564927611035
+imbalance_ratio,1.6
+
+Fiber Name,Lines of Code
+Vconcurrency_demo___024root__DepSet_h8cd83083__0.cpp,27
+Vconcurrency_demo___024root__DepSet_h1c3904b2__0.cpp,108

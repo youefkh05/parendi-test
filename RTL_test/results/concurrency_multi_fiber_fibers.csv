@@ -1,0 +1,11 @@
+Metric,Value
+num_fibers-concurrency_degree,2
+mean_fiber_size-avg_partition_workload,79
+max_fiber_size-worst_case_partition_cost,131
+min_fiber_size,27
+std_fiber_size-load_variance,73.53910524340094
+imbalance_ratio-parallel_efficiency_risk,1.6582278481012658
+
+Fiber Name,Lines of Code
+Vconcurrency_multi_fiber___024root__DepSet_h64a42572__0.cpp,27
+Vconcurrency_multi_fiber___024root__DepSet_h40f98e12__0.cpp,131
