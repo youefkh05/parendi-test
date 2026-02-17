@@ -8,29 +8,45 @@ import statistics
 import csv
 import sys
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-OBJ_DIR = os.path.join(ROOT, "..", "obj_dir")
-RESULTS_DIR = os.path.join(ROOT, "results")
+
+# Path to this script
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Repository root (one level above RTL_test/)
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
+
+# Parendi / Verilator paths
+VERILATOR = os.path.join(REPO_ROOT, "bin", "verilator")
+OBJ_DIR = os.path.join(REPO_ROOT, "obj_dir")
+
+# Output location (local to RTL_test)
+RESULTS_DIR = os.path.join(SCRIPT_DIR, "results")
 
 def clean_obj_dir():
     if os.path.exists(OBJ_DIR):
         shutil.rmtree(OBJ_DIR)
-    os.makedirs(OBJ_DIR, exist_ok=True)
+    os.makedirs(OBJ_DIR)
+
 
 def run_parendi(verilog_file):
-    verilator_path = os.path.abspath(
-        os.path.join(ROOT, "..", "bin", "verilator")
-    )
+    top = os.path.splitext(os.path.basename(verilog_file))[0]
 
-    if not os.path.exists(verilator_path):
-        raise RuntimeError(f"Verilator not found at {verilator_path}")
+    if not os.path.isfile(VERILATOR):
+        raise RuntimeError(f"Verilator not found at {VERILATOR}")
 
     cmd = [
-        verilator_path,
-        "--cc", verilog_file,
-        "--top-module", os.path.splitext(os.path.basename(verilog_file))[0],
-        "--threads", "1"
+    	VERILATOR,
+    	"--cc", verilog_file,
+    	"--top-module", top,
+    	"--threads", "1",
+    	"-Wno-fatal",
+    	"-Wno-WIDTHTRUNC",
+    	"-Wno-WIDTHEXPAND",
+    	"-Wno-SELRANGE",
+    	"-Wno-CASEINCOMPLETE"
     ]
+
+
 
     subprocess.run(cmd, check=True)
 
@@ -66,7 +82,6 @@ def main():
 
     fiber_sizes = [(os.path.basename(f), count_lines(f)) for f in depset_files]
     sizes = [s for _, s in fiber_sizes]
-
     stats = {
         "num_fibers-concurrency_degree": len(sizes),
         "mean_fiber_size-avg_partition_workload": statistics.mean(sizes),
@@ -75,6 +90,18 @@ def main():
         "std_fiber_size-load_variance": statistics.stdev(sizes) if len(sizes) > 1 else 0.0,
         "imbalance_ratio-parallel_efficiency_risk": max(sizes) / statistics.mean(sizes)
     }
+
+    print("\n=== Parendi Fiber Statistics ===")
+    for k, v in stats.items():
+        if isinstance(v, float):
+            print(f"{k:45s}: {v:.4f}")
+        else:
+            print(f"{k:45s}: {v}")
+
+    print("→ Writing CSV:", output_csv)
+    with open(output_csv, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Metric", "Value"])
 
     print("✔ Writing CSV:", output_csv)
     with open(output_csv, "w", newline="") as f:
@@ -92,3 +119,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,0 +1,11 @@
+Metric,Value
+num_fibers-concurrency_degree,2
+mean_fiber_size-avg_partition_workload,3873
+max_fiber_size-worst_case_partition_cost,7702
+min_fiber_size,44
+std_fiber_size-load_variance,5415.023730326581
+imbalance_ratio-parallel_efficiency_risk,1.9886392977020397
+
+Fiber Name,Lines of Code
+Vaxi_vfifo_dec___024root__DepSet_hb328f80f__0.cpp,44
+Vaxi_vfifo_dec___024root__DepSet_h1c765152__0.cpp,7702
